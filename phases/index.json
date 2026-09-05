@@ -36,8 +36,11 @@
       "done_when": "가상 SOP 6종 PDF 생성 → 파싱·청킹·임베딩 → pgvector/Qdrant 양쪽 적재, 재현 명령 1개",
       "outputs": [
         "data/sop/",
+        "eval/rag-goldset.yaml",
+        "scripts/validate_corpus.py",
         "scripts/ingest.py"
-      ]
+      ],
+      "note": "코퍼스 집필·검증 완료(문서 6종·골드셋 30건). 남은 것: PDF 생성 → 파싱·청킹·임베딩 → 양쪽 스토어 적재"
     },
     {
       "id": "P3",

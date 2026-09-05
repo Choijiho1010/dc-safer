@@ -1,0 +1,95 @@
+# 한빛 IDC 대응 인력 페르소나 (가상 인물, 포트폴리오 데모용)
+# fictional: true — 실존 인물과 무관
+personas:
+  - id: p-power-01
+    name: 임도윤
+    role: 전력담당
+    team: 전력설비팀
+    shift: 주간
+    certifications:
+      - 전기산업기사
+      - 승강기및비상발전설비 취급교육 이수
+    experience_years: 7
+    on_call: true
+    escalation_level: 2
+    preferred_channel: 전화
+    assigned_systems:
+      - UPS
+      - 비상발전기
+      - PDU
+      - ATS
+      - 배전반
+
+  - id: p-gpu-01
+    name: 박서연
+    role: GPU서버담당
+    team: 서버운영팀
+    shift: 주간
+    certifications:
+      - 리눅스마스터 1급
+      - 정보처리기사
+    experience_years: 5
+    on_call: true
+    escalation_level: 2
+    preferred_channel: 메신저
+    assigned_systems:
+      - GPU랙
+      - GPU서버
+      - 랙PDU
+      - DCGM모니터링
+
+  - id: p-net-01
+    name: 김하은
+    role: 네트워크담당
+    team: 네트워크운영팀
+    shift: 야간
+    certifications:
+      - 네트워크관리사 1급
+      - CCNP
+    experience_years: 6
+    on_call: true
+    escalation_level: 2
+    preferred_channel: 메신저
+    assigned_systems:
+      - 코어스위치
+      - 백본회선
+      - 방화벽
+      - 라우터
+      - ToR스위치
+
+  - id: p-fac-01
+    name: 이준혁
+    role: 시설안전담당
+    team: 시설안전팀
+    shift: 야간
+    certifications:
+      - 소방안전관리자 2급
+      - 공조냉동기계기사
+    experience_years: 8
+    on_call: true
+    escalation_level: 2
+    preferred_channel: 무전기
+    assigned_systems:
+      - CRAC
+      - CRAH
+      - 항온항습기
+      - 냉각수배관
+      - 방화시설
+
+  - id: p-senior-01
+    name: 정민석
+    role: 관제총괄
+    team: 관제운영팀
+    shift: 주간
+    certifications:
+      - 정보시스템감리사
+      - 소방안전관리자 1급
+      - ITIL Foundation
+    experience_years: 15
+    on_call: true
+    escalation_level: 1
+    preferred_channel: 전화
+    assigned_systems:
+      - 전체계통
+      - 관제시스템
+      - 알림채널

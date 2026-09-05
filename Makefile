@@ -23,6 +23,7 @@ lint:
 validate:      ## 공개 레포 유출 게이트 (커밋 전 필수)
 	python3 scripts/validate_repo.py
 	python3 .claude/hooks/test_block_leak.py
+	cd backend && uv run --with pyyaml python ../scripts/validate_corpus.py
 
 eval:          ## RAG 평가셋 실행 → docs/BENCHMARKS.md 갱신 (P3에서 구현)
 	@echo "P3 단계에서 구현한다"

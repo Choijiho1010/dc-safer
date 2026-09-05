@@ -1,0 +1,113 @@
+# 한빛 IDC 인시던트 시나리오 (가상, 포트폴리오 데모용)
+# fictional: true — 실존 조직·설비와 무관
+scenarios:
+  - scenario_id: SCN-001
+    name: GPU 랙 과열
+    trigger_metric: gpu_inlet_temp_c
+    severity: P2
+    expected_sop: SOP-GPU-003
+    steps:
+      - step: 1
+        role: GPU서버담당
+        sop_section: "4.1"
+        completion_criteria: 대상 서버·GPU 슬롯이 특정되고 현재 온도·에러코드가 보고됨
+        evidence_type: text
+      - step: 2
+        role: GPU서버담당
+        sop_section: "4.2"
+        completion_criteria: 스로틀링 여부와 팬 회전수 상태가 판정됨
+        evidence_type: text
+      - step: 3
+        role: 시설안전담당
+        sop_section: "4.3"
+        completion_criteria: 랙 국소온도가 정상 범위이거나 이상 사실이 전달됨
+        evidence_type: photo
+      - step: 4
+        role: GPU서버담당
+        sop_section: "4.4"
+        completion_criteria: 작업이 체크포인트 저장 완료 후 정상 종료되고 스케줄러에서 제외됨
+        evidence_type: text
+      - step: 5
+        role: GPU서버담당
+        sop_section: "4.5"
+        completion_criteria: 교체 부품 장착 완료 및 서버 재장착 완료
+        evidence_type: photo
+      - step: 6
+        role: GPU서버담당
+        sop_section: "4.6"
+        completion_criteria: 30분간 GPU 온도가 80°C 미만으로 유지되고 클럭 저하 없음
+        evidence_type: text
+
+  - scenario_id: SCN-002
+    name: UPS 계통 이상
+    trigger_metric: ups_output_voltage_deviation_pct
+    severity: P1
+    expected_sop: SOP-PWR-001
+    steps:
+      - step: 1
+        role: 전력담당
+        sop_section: "4.1"
+        completion_criteria: 알람 종류가 특정되고 관제총괄에게 최초 보고가 완료됨
+        evidence_type: text
+      - step: 2
+        role: 전력담당
+        sop_section: "4.2"
+        completion_criteria: UPS 출력 전압이 정격범위로 유지되고 부하측 순단 미보고
+        evidence_type: video
+      - step: 3
+        role: 전력담당
+        sop_section: "4.3"
+        completion_criteria: 발전기 정격 출력 도달 및 ATS가 발전기 계통으로 전환 완료
+        evidence_type: photo
+      - step: 4
+        role: 전력담당
+        sop_section: "4.4"
+        completion_criteria: UPS 배터리 잔량 저하가 멈추고 재충전 곡선으로 전환됨
+        evidence_type: text
+      - step: 5
+        role: GPU서버담당
+        sop_section: "4.6"
+        completion_criteria: 전 GPU 랙 PDU 전압 편차가 정격 대비 ±5% 이내로 보고됨
+        evidence_type: text
+      - step: 6
+        role: 관제총괄
+        sop_section: "6"
+        completion_criteria: 장애보고 양식에 발생시각·원인·조치·복구시각이 기록됨
+        evidence_type: text
+
+  - scenario_id: SCN-003
+    name: 코어스위치 단절
+    trigger_metric: core_switch_packet_loss_pct
+    severity: P1
+    expected_sop: SOP-NET-004
+    steps:
+      - step: 1
+        role: 네트워크담당
+        sop_section: "4.1"
+        completion_criteria: 단절 범위와 영향받는 랙 목록이 특정됨
+        evidence_type: text
+      - step: 2
+        role: 네트워크담당
+        sop_section: "4.2"
+        completion_criteria: 원인 계층이 특정되고 관제총괄에 보고됨
+        evidence_type: text
+      - step: 3
+        role: 네트워크담당
+        sop_section: "4.3"
+        completion_criteria: 트래픽이 예비 경로로 전환되고 단절 구간의 통신이 복구됨
+        evidence_type: video
+      - step: 4
+        role: 네트워크담당
+        sop_section: "4.5"
+        completion_criteria: 교체 후 해당 포트 링크상태가 정상(Up)으로 전환됨
+        evidence_type: photo
+      - step: 5
+        role: GPU서버담당
+        sop_section: "4.6"
+        completion_criteria: 영향받은 랙 전체 서버의 통신 테스트가 정상으로 확인됨
+        evidence_type: text
+      - step: 6
+        role: 관제총괄
+        sop_section: "4"
+        completion_criteria: 심각도 P1 판정 및 전 담당역할 15분 내 통보 완료
+        evidence_type: text
