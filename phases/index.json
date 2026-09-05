@@ -1,0 +1,30 @@
+{
+  "project": "dc-safer",
+  "updated": "2026-09-05",
+  "gate": "총점 80/100 AND P0=0 (docs/RUBRIC.md)",
+  "phases": [
+    { "id": "P0", "name": "하네스 부트스트랩", "status": "done",
+      "outputs": ["CLAUDE.md", "scripts/validate_repo.py", ".claude/hooks/block_leak.py", "docs/RUBRIC.md", ".claude/agents/judge-portfolio.md", "docs/ADR.md"] },
+    { "id": "P1", "name": "골격 + CI/CD 초록불", "status": "in_progress",
+      "done_when": "docker compose up으로 healthz 200, GitHub Actions가 lint+test+build+GHCR 푸시까지 통과",
+      "outputs": ["docker-compose.yml", "backend/app/main.py", "frontend/", ".github/workflows/ci.yml"] },
+    { "id": "P2", "name": "SOP 코퍼스 + 적재 파이프라인", "status": "todo",
+      "done_when": "가상 SOP 6종 PDF 생성 → 파싱·청킹·임베딩 → pgvector/Qdrant 양쪽 적재, 재현 명령 1개",
+      "outputs": ["data/sop/", "scripts/ingest.py"] },
+    { "id": "P3", "name": "임베딩·벡터스토어 벤치마크", "status": "todo",
+      "done_when": "골드셋 30건으로 후보 4종 x 스토어 2종 측정, docs/BENCHMARKS.md에 표 + 운영 기본값 확정(ADR-004)",
+      "outputs": ["eval/", "docs/BENCHMARKS.md"] },
+    { "id": "P4", "name": "이상탐지 모델 사다리", "status": "todo",
+      "done_when": "공개 데이터셋으로 임계치→IsolationForest→LSTM-AE F1·오탐률 비교표",
+      "outputs": ["backend/app/detect/", "docs/BENCHMARKS.md"] },
+    { "id": "P5", "name": "역할별 전파 + 순차 대응 루프", "status": "todo",
+      "done_when": "탐지→인사조회→역할별 SOP 검색→4인 개별 지시→대응보고(사진/영상)→다음 단계 전파가 E2E 테스트로 통과",
+      "outputs": ["backend/app/orchestrator.py", "backend/tests/test_e2e_scenario.py"] },
+    { "id": "P6", "name": "Operator Theater", "status": "todo",
+      "done_when": "4분할 실시간 화면 + 시니어 모니터링(진행률·SLA), WebSocket 재연결 처리",
+      "outputs": ["frontend/src/theater/"] },
+    { "id": "P7", "name": "포트폴리오 마감", "status": "todo",
+      "done_when": "judge-portfolio 총점 80+ / P0 0, README에 수치표·다이어그램·데모 영상",
+      "outputs": ["README.md", "docs/BENCHMARKS.md"] }
+  ]
+}

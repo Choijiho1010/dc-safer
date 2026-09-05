@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+.pytest_cache/
+.ruff_cache/
+data/media/
+eval/runs/
+*.pdf.tmp
+*.egg-info/
+.data/

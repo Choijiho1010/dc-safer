@@ -1,0 +1,42 @@
+# 로컬 원커맨드 데모: `make up`
+# 데이터 볼륨은 기본적으로 도커가 관리한다. 대용량을 외장 디스크에 두려면
+# .env 의 DATA_ROOT 를 그 경로로 지정한다(예: DATA_ROOT=/Volumes/T7/data/dc-safer).
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-safer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-safer}
+    ports: ["5432:5432"]
+    volumes:
+      - ${DATA_ROOT:-./.data}/pgdata:/var/lib/postgresql/data
+      - ./backend/sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-safer}"]
+      interval: 5s
+      retries: 10
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    ports: ["6333:6333"]
+    volumes:
+      - ${DATA_ROOT:-./.data}/qdrant:/qdrant/storage
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-safer}:${POSTGRES_PASSWORD:-change_me}@postgres:5432/${POSTGRES_DB:-safer}
+      QDRANT_URL: http://qdrant:6333
+      VECTOR_BACKEND: ${VECTOR_BACKEND:-pgvector}
+      ENVIRONMENT: local
+    ports: ["8000:8000"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      qdrant: { condition: service_started }
+
+  frontend:
+    build: ./frontend
+    ports: ["5173:80"]
+    depends_on:
+      backend: { condition: service_started }
