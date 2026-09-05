@@ -2,10 +2,11 @@ FROM python:3.12-slim AS base
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
 
+# 패키지 메타와 소스를 함께 넣는다. setuptools가 packages=["app"]를 해석하려면
+# 설치 시점에 app/ 이 존재해야 한다.
 COPY pyproject.toml ./
-RUN pip install --no-cache-dir . && pip install --no-cache-dir uvicorn[standard]
-
 COPY app ./app
+RUN pip install --no-cache-dir . "uvicorn[standard]"
 
 EXPOSE 8000
 HEALTHCHECK --interval=15s --timeout=3s --retries=5 \
